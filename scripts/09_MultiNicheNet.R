@@ -1,4 +1,4 @@
-# scRNA-Seq. VPS 6 weeks - Immune Cells
+# scRNA-Seq. Injury 6 weeks - Immune Cells
 # Script 09: MultiNicheNet
 # written by Gideon JL Schaefer
 # 2026-08-14
@@ -36,7 +36,7 @@ DefaultAssay(seurat_obj) <- "RNA"
 # Metadata from script 02:
 # HTO_classification = Mouse1-Mouse11 (sample_id for MultiNicheNet pseudobulk)
 # multiplexed_library = library1-library4
-# intervention = VPS / Sham
+# intervention = Injury / Sham
 
 sce <- Seurat::as.SingleCellExperiment(seurat_obj, assay = "RNA")
 sce <- alias_to_symbol_SCE(sce, organism = "mouse") %>% makenames_SCE()
@@ -89,11 +89,11 @@ batches <- NA
 
 ##Deifne contrasts of interest
 
-contrasts_oi = c("'VPS-Sham','Sham-VPS'")
+contrasts_oi = c("'Injury-Sham','Sham-Injury'")
 
 contrast_tbl <- tibble::tibble(
-  contrast = c("VPS-Sham", "Sham-VPS"),
-  group      = c("VPS", "Sham")
+  contrast = c("Injury-Sham", "Sham-Injury"),
+  group      = c("Injury", "Sham")
 )
 
 ## Define the sender and receiver cell types of interest.
@@ -360,7 +360,7 @@ multinichenet_output = list(
   ###Specific bubble plots for BCs as receivers // GOI = "Sham"
   group_oi = "Sham"
   
-   prioritized_tbl_oi_VPS_50 = get_top_n_lr_pairs(
+   prioritized_tbl_oi_Injury_50 = get_top_n_lr_pairs(
     multinichenet_output$prioritization_tables, 
     50, 
     groups_oi = group_oi, 
@@ -368,16 +368,16 @@ multinichenet_output = list(
   
   plot_oi = make_sample_lr_prod_activity_plots_Omnipath(
     multinichenet_output$prioritization_tables, 
-    prioritized_tbl_oi_VPS_50 %>% inner_join(lr_network_all))
+    prioritized_tbl_oi_Injury_50 %>% inner_join(lr_network_all))
   plot_oi
   
   ggsave(paste0(output_dir,"/sample_lr_prod_activity_plot_GOI_Sham_Reciever_BCs.svg"), plot_oi,
          width = 24, height = 8, limitsize = FALSE)
   
-  ###Specific bubble plots for BCs as receivers // GOI = "VPS"
-  group_oi = "VPS"
+  ###Specific bubble plots for BCs as receivers // GOI = "Injury"
+  group_oi = "Injury"
   
-  prioritized_tbl_oi_VPS_50 = get_top_n_lr_pairs(
+  prioritized_tbl_oi_Injury_50 = get_top_n_lr_pairs(
     multinichenet_output$prioritization_tables, 
     50, 
     groups_oi = group_oi, 
@@ -385,10 +385,10 @@ multinichenet_output = list(
   
   plot_oi = make_sample_lr_prod_activity_plots_Omnipath(
     multinichenet_output$prioritization_tables, 
-    prioritized_tbl_oi_VPS_50 %>% inner_join(lr_network_all))
+    prioritized_tbl_oi_Injury_50 %>% inner_join(lr_network_all))
   plot_oi
   
-  ggsave(paste0(output_dir,"/sample_lr_prod_activity_plot_GOI_VPS_Reciever_BCs.svg"), plot_oi,
+  ggsave(paste0(output_dir,"/sample_lr_prod_activity_plot_GOI_Injury_Reciever_BCs.svg"), plot_oi,
          width = 24, height = 8, limitsize = FALSE)
   
   

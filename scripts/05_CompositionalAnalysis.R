@@ -1,4 +1,4 @@
-# scRNA-Seq. VPS 6 weeks - Immune Cells
+# scRNA-Seq. Injury 6 weeks - Immune Cells
 # Script 05: Compositional_analysis
 # written by Gideon JL Schaefer
 # 2026-08-14
@@ -24,7 +24,7 @@ library(RColorBrewer)
 data <- readRDS(input_rds)
 Idents(data) <- data$cluster_annotation
 
-# Metadata from script 02: HTO_classification = Mouse1-Mouse11; multiplexed_library = library1-library4; intervention = VPS/Sham
+# Metadata from script 02: HTO_classification = Mouse1-Mouse11; multiplexed_library = library1-library4; intervention = Injury/Sham
 cluster_order <- c(
   "Granulocytes",
   "Ly6c2high_Monos",
@@ -36,7 +36,7 @@ cluster_order <- c(
   "NKCs"
 )
 data$cluster_annotation <- factor(as.character(data$cluster_annotation), levels = cluster_order)
-data$intervention <- factor(as.character(data$intervention), levels = c("Sham", "VPS"))
+data$intervention <- factor(as.character(data$intervention), levels = c("Sham", "Injury"))
 
 cluster_colors <- setNames(
   RColorBrewer::brewer.pal(length(cluster_order), "Set2"),

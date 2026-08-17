@@ -1,4 +1,4 @@
-# scRNA-Seq. VPS 6 weeks - Immune Cells
+# scRNA-Seq. Injury 6 weeks - Immune Cells
 # Script 11: NABA_ECM
 # written by Gideon JL Schaefer
 # 2026-08-14
@@ -26,7 +26,7 @@ seurat_obj <- readRDS(input_rds)
 DefaultAssay(seurat_obj) <- "RNA"
 Idents(seurat_obj) <- seurat_obj$cluster_annotation
 
-# Metadata from script 02: HTO_classification = Mouse1-Mouse11; intervention = VPS/Sham
+# Metadata from script 02: HTO_classification = Mouse1-Mouse11; intervention = Injury/Sham
 cluster_order <- c(
   "Granulocytes",
   "Ly6c2high_Monos",
@@ -38,7 +38,7 @@ cluster_order <- c(
   "NKCs"
 )
 seurat_obj$cluster_annotation <- factor(as.character(seurat_obj$cluster_annotation), levels = cluster_order)
-seurat_obj$intervention <- factor(as.character(seurat_obj$intervention), levels = c("Sham", "VPS"))
+seurat_obj$intervention <- factor(as.character(seurat_obj$intervention), levels = c("Sham", "Injury"))
 
 # ============================================================================
 # Download NABA_ECM_REGULATORS gene set (MSigDB mouse via msigdbr)
@@ -61,15 +61,15 @@ seurat_obj <- AddModuleScore(
 )
 
 # ============================================================================
-# Density plot by cell cluster (Sham vs VPS)
+# Density plot by cell cluster (Sham vs Injury)
 # ============================================================================
 
-intervention_colors <- c("Sham" = "#1F4E79", "VPS" = "#E64A19")
+intervention_colors <- c("Sham" = "#1F4E79", "Injury" = "#E64A19")
 
 naba_density_df <- seurat_obj@meta.data %>%
   dplyr::mutate(
     cluster_annotation = factor(as.character(cluster_annotation), levels = cluster_order),
-    intervention = factor(as.character(intervention), levels = c("Sham", "VPS"))
+    intervention = factor(as.character(intervention), levels = c("Sham", "Injury"))
   )
 
 p_naba_density <- ggplot(naba_density_df, aes(x = NABA_ECM_Regulator1, color = intervention, fill = intervention)) +

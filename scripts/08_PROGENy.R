@@ -1,4 +1,4 @@
-# scRNA-Seq. VPS 6 weeks - Immune Cells
+# scRNA-Seq. Injury 6 weeks - Immune Cells
 # Script 08: PROGENy pathway activity
 # written by Gideon JL Schaefer
 # 2026-08-14
@@ -33,8 +33,8 @@ data <- readRDS(input_rds)
 DefaultAssay(data) <- "RNA"
 Idents(data) <- data$cluster_annotation
 
-# Metadata from script 02: HTO_classification = Mouse1-Mouse11; intervention = VPS/Sham
-data$intervention <- factor(as.character(data$intervention), levels = c("Sham", "VPS"))
+# Metadata from script 02: HTO_classification = Mouse1-Mouse11; intervention = Injury/Sham
+data$intervention <- factor(as.character(data$intervention), levels = c("Sham", "Injury"))
 
 # ============================================================================
 # PROGENy (Mouse) 
@@ -60,7 +60,7 @@ DefaultAssay(data) <- "PROGENy"
 data <- ScaleData(data, assay = "PROGENy", verbose = TRUE)
 
 # ============================================================================
-# Calculate difference in progeny activity (VPS - Sham)
+# Calculate difference in progeny activity (Injury - Sham)
 # ============================================================================
 
 calc_delta <- function(seurat_obj, assay_name) {
@@ -69,7 +69,7 @@ calc_delta <- function(seurat_obj, assay_name) {
   out <- list()
   for (cl in unique(as.character(md$cluster_annotation))) {
     cells <- rownames(md)[as.character(md$cluster_annotation) == cl]
-    c1 <- cells[as.character(md[cells, "intervention"]) == "VPS"]
+    c1 <- cells[as.character(md[cells, "intervention"]) == "Injury"]
     c2 <- cells[as.character(md[cells, "intervention"]) == "Sham"]
     c1 <- intersect(c1, colnames(mat))
     c2 <- intersect(c2, colnames(mat))

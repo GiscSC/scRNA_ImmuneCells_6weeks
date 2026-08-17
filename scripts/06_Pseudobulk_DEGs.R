@@ -1,4 +1,4 @@
-# scRNA-Seq. VPS 6 weeks - Immune Cells
+# scRNA-Seq. Injury 6 weeks - Immune Cells
 # Script 06: Pseudobulk DEGs (DESeq2)
 # written by Gideon JL Schaefer
 # 2026-08-14
@@ -24,7 +24,7 @@ data <- readRDS(input_rds)
 DefaultAssay(data) <- "RNA" 
 Idents(data) <- data$cluster_annotation
 
-# Metadata from script 02: HTO_classification = Mouse1-Mouse11; intervention = VPS/Sham
+# Metadata from script 02: HTO_classification = Mouse1-Mouse11; intervention = Injury/Sham
 cluster_order <- c(
   "Granulocytes",
   "Ly6c2high_Monos",
@@ -41,7 +41,7 @@ cluster_order <- c(
 # ============================================================================
 
 ####Aggregate cells per mouse (HTO_classification = Mouse1-Mouse11) into pseudobulk
-data$intervention <- factor(as.character(data$intervention), levels = c("Sham", "VPS"))
+data$intervention <- factor(as.character(data$intervention), levels = c("Sham", "Injury"))
 data$cluster_annotation <- factor(as.character(data$cluster_annotation), levels = cluster_order)
 
 pseudo <- AggregateExpression(
@@ -57,14 +57,14 @@ pseudo$newIdent <- paste0(pseudo$cluster_annotation, "_", pseudo$intervention)
 Idents(pseudo) <- pseudo$newIdent
 
 # ============================================================================
-# DESeq2 DEGs per cluster (VPS vs Sham)
+# DESeq2 DEGs per cluster (Injury vs Sham)
 # ============================================================================
 
 clusters <- as.character(unique(pseudo$cluster_annotation))
 deg_list_all <- list()
 
 for (cl in clusters) {
-  ident1 <- paste0(cl, "_VPS")
+  ident1 <- paste0(cl, "_Injury")
   ident2 <- paste0(cl, "_Sham")
 
    de <- FindMarkers(
@@ -77,7 +77,7 @@ for (cl in clusters) {
 
   de$gene <- rownames(de)
   de$cluster <- cl
-  de$comparison <- "VPS_vs_Sham"
+  de$comparison <- "Injury_vs_Sham"
 
   deg_list_all[[cl]] <- de
 

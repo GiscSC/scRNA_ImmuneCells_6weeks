@@ -1,4 +1,4 @@
-# scRNA-Seq. VPS 6 weeks - Immune Cells
+# scRNA-Seq. Injury 6 weeks - Immune Cells
 # Script 04: Cluster_annotation
 # written by Gideon JL Schaefer
 # 2026-08-14

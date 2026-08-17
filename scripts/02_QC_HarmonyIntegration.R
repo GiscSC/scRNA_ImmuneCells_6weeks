@@ -1,4 +1,4 @@
-# scRNA-Seq. VPS 6 weeks - Immune Cells
+# scRNA-Seq. Injury 6 weeks - Immune Cells
 # Script 02: Doublet Exclusion, QC Filtering, and Harmony Integration
 # written by Gideon JL Schaefer
 # 2026-08-14
@@ -27,8 +27,8 @@ library(SingleCellExperiment)
 # ============================================================================
 # Sample labels + intervention mapping
 # ============================================================================
-# library1: Mouse1-3  -> VPS
-# library2: Mouse4-5  -> VPS
+# library1: Mouse1-3  -> Injury
+# library2: Mouse4-5  -> Injury
 # library3: Mouse6-8  -> Sham
 # library4: Mouse9-11 -> Sham
 # HTO_classification (Mouse1-Mouse11) is set in script 01 during demultiplexing.
@@ -36,8 +36,8 @@ library(SingleCellExperiment)
 library_labels <- c("library1", "library2", "library3", "library4")
 
 mouse_to_intervention <- c(
-  "Mouse1" = "VPS", "Mouse2" = "VPS", "Mouse3" = "VPS",           
-  "Mouse4" = "VPS", "Mouse5" = "VPS",
+  "Mouse1" = "Injury", "Mouse2" = "Injury", "Mouse3" = "Injury",           
+  "Mouse4" = "Injury", "Mouse5" = "Injury",
   "Mouse6" = "Sham", "Mouse7" = "Sham", "Mouse8" = "Sham",
   "Mouse9" = "Sham", "Mouse10" = "Sham", "Mouse11" = "Sham"
 )
@@ -67,7 +67,7 @@ combined <- merge(
   sample1,
   y = c(sample2, sample3, sample4),
   add.cell.ids = library_labels,
-  project = "VPS_6weeks_ICs"
+  project = "Injury_6weeks_ICs"
 )
 combined <- JoinLayers(combined, overwrite = TRUE)
 

@@ -1,6 +1,6 @@
-# scRNA_ImmuneCells_VPS_6weeks
+# scRNA_ImmuneCells_6weeks
 
-scRNA-seq analysis of peripherial CD45+ immune cells in VPS and Sham mice after 6 weeks of cyclic uremia
+scRNA-seq analysis of peripherial CD45+ immune cells in Injury and Sham mice after 6 weeks
 
 ## Environment
 
