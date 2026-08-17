@@ -1,0 +1,22 @@
+# R
+.Rhistory
+.RData
+.Rproj.user
+.Ruserdata
+
+# renv
+renv/library/
+renv/local/
+renv/cellar/
+renv/lock/
+renv/python/
+renv/sandbox/
+renv/staging/
+
+# data / outputs
+data/rds/*
+!data/rds/.gitkeep
+*.rds
+
+# macOS
+.DS_Store
